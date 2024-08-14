@@ -1,0 +1,322 @@
+:root {
+  --white: white;
+  --black: black;
+  --gray: var(--white);
+}
+
+.w-layout-blockcontainer {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+@media screen and (max-width: 991px) {
+  .w-layout-blockcontainer {
+    max-width: 728px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .w-layout-blockcontainer {
+    max-width: none;
+  }
+}
+
+body {
+  color: #333;
+  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.sectionhome {
+  width: 100vw;
+  max-width: 100vw;
+  height: 100vh;
+  max-height: 100vh;
+}
+
+.divhomemaingrid {
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  grid-template-rows: auto;
+  grid-template-columns: 60% 40fr;
+  grid-auto-columns: 1fr;
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  max-height: 100%;
+  display: grid;
+}
+
+.divblockhomemainimage {
+  background-image: url('../images/Background_Login.jpg');
+  background-position: 50%;
+  background-size: cover;
+}
+
+.divblockhomelogin {
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  grid-template-rows: auto;
+  grid-template-columns: 1fr;
+  grid-auto-columns: 1fr;
+  display: grid;
+}
+
+.imagehomemainimage {
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  overflow: visible;
+}
+
+.containerhomelogin {
+  width: 100%;
+  max-width: 70%;
+  height: 100vh;
+  max-height: 50vh;
+}
+
+.divblockhomelogingrid {
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  grid-template-rows: 6vh;
+  grid-template-columns: 1fr;
+  grid-auto-columns: 1fr;
+  width: 100%;
+  max-width: 100%;
+  height: 8vh;
+  max-height: 8vh;
+  display: grid;
+}
+
+.divblockhomeloginlogo {
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  grid-template-rows: 10vh;
+  grid-template-columns: 1fr;
+  grid-auto-columns: 1fr;
+  width: 100%;
+  max-width: 100%;
+  height: 10vh;
+  max-height: 10vh;
+  display: grid;
+}
+
+.divblocklogintext, .divblockhomeloginid, .divblockhomeloginpassword {
+  height: 10vh;
+  max-height: 10vh;
+}
+
+.divblockhomeloginbuttongrid {
+  grid-column-gap: 1.5vw;
+  grid-row-gap: 1.5vw;
+  grid-template-rows: auto;
+  grid-template-columns: 7vw 7vw;
+  grid-auto-columns: 1fr;
+  height: 10vh;
+  max-height: 10vh;
+  display: grid;
+}
+
+.divblockhomeloginlogoimage {
+  background-image: url('../images/Logo_RedRed.png');
+  background-position: 0 0;
+  background-size: 11.2vw 5vh;
+  width: 11.2vw;
+  max-width: 11.2vw;
+  height: 5vh;
+  max-height: 5vh;
+}
+
+.headinghomesignup {
+  color: #000;
+  text-align: right;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-family: Montserrat, sans-serif;
+  font-size: 4vw;
+}
+
+.text-field {
+  background-color: #eee;
+  border-radius: 1vw;
+}
+
+.divblockhomeloginsignupbutton {
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  border: 1px solid #bc2731;
+  border-radius: 1vw;
+  grid-template-rows: auto;
+  grid-template-columns: 1fr;
+  grid-auto-columns: 1fr;
+  width: 7vw;
+  max-width: 7vw;
+  height: 5vh;
+  max-height: 5vh;
+  display: grid;
+}
+
+.divblockhomeloginloginbutton {
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  background-color: #bc2731;
+  border-radius: 1vw;
+  grid-template-rows: auto;
+  grid-template-columns: 1fr;
+  grid-auto-columns: 1fr;
+  width: 7vw;
+  max-width: 7vw;
+  height: 5vh;
+  max-height: 5vh;
+  display: grid;
+}
+
+.headinghomeloginsignupbutton {
+  color: #bc2731;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 1.5vw;
+  line-height: 4vh;
+}
+
+.heading {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.headinghomeloginloginbutton {
+  color: #fff;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 1.5vw;
+  line-height: 4vh;
+}
+
+.headinghomeloginname {
+  color: #000;
+  text-align: left;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-family: Montserrat, sans-serif;
+  font-size: 1vw;
+}
+
+.signupheading {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 2vw;
+}
+
+.text-field-2 {
+  background-color: #eee;
+  border-radius: 1vw;
+}
+
+.form {
+  border-radius: 1vw;
+}
+
+.text-field-3, .text-field-4, .text-field-5, .text-field-6 {
+  background-color: #eee;
+  border-radius: 1vw;
+}
+
+.divloginmaingrid {
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  grid-template-rows: auto;
+  grid-template-columns: 60% 40fr;
+  grid-auto-columns: 1fr;
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  max-height: 100%;
+  display: grid;
+}
+
+.divblockhomesignup {
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  grid-template-rows: auto;
+  grid-template-columns: 1fr;
+  grid-auto-columns: 1fr;
+  display: grid;
+}
+
+.containerhomesignup {
+  width: 100%;
+  max-width: 70%;
+  height: 90vh;
+  max-height: 90vh;
+}
+
+.divblockhomesignupinfo {
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  grid-template-rows: 6vh;
+  grid-template-columns: 1fr;
+  grid-auto-columns: 1fr;
+  width: 100%;
+  max-width: 100%;
+  height: 8vh;
+  max-height: 8vh;
+  display: grid;
+}
+
+.divblocksignuptext {
+  height: 10vh;
+  max-height: 10vh;
+}
+
+.divblocksignupinfo {
+  height: 75vh;
+  max-height: 73vh;
+}
+
+.divblockhomesignupbutton {
+  grid-column-gap: 1.5vw;
+  grid-row-gap: 1.5vw;
+  grid-template-rows: auto;
+  grid-template-columns: 7vw 7vw;
+  grid-auto-columns: 1fr;
+  height: 10vh;
+  max-height: 10vh;
+  display: grid;
+}
+
+#w-node-b63e7e0b-674e-3dfb-04ce-5705d3391748-16edd2ce {
+  place-self: center;
+}
+
+#w-node-_3f1c5424-9ebb-7e8a-2fd8-2fe2701025cc-16edd2ce {
+  grid-area: span 1 / span 1 / span 1 / span 1;
+}
+
+#w-node-_04f5c6f2-3011-ab87-78b4-5894f9e9c2f3-16edd2ce, #w-node-bee491b2-d486-322e-a31e-cc513d901839-16edd2ce {
+  justify-self: end;
+}
+
+#w-node-_3166b53b-50ab-76db-c647-fa125388cd45-16edd2ce, #w-node-_4c71658b-c64e-a114-9a8e-28b60bf2480e-16edd2ce, #w-node-b63e7e0b-674e-3dfb-04ce-5705d3391748-15a700e7 {
+  place-self: center;
+}
+
+#w-node-d012c2c5-4c41-0fc0-4b98-52d7b94f4509-15a700e7 {
+  grid-area: span 1 / span 1 / span 1 / span 1;
+}
+
+#w-node-_5676cae0-bb82-c734-fe19-c9e37406fc3e-15a700e7 {
+  grid-area: span 2 / span 1 / span 2 / span 1;
+}
+
+#w-node-bee491b2-d486-322e-a31e-cc513d901839-15a700e7 {
+  justify-self: end;
+}
+
+#w-node-_3166b53b-50ab-76db-c647-fa125388cd45-15a700e7, #w-node-_4c71658b-c64e-a114-9a8e-28b60bf2480e-15a700e7 {
+  place-self: center;
+}
