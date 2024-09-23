@@ -21,7 +21,10 @@ class CustomUserManager(BaseUserManager):
 class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     username = models.CharField(max_length=50, unique=True)
-    name = models.CharField(max_length=60)
+    name = models.CharField(max_length=60, default="")
+    year_of_graduation = models.CharField(max_length=60, default="")
+    major = models.CharField(max_length=60, default="")
+    interest = models.CharField(max_length=60, default="")
 
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)

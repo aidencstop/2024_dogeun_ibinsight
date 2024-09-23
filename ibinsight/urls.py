@@ -24,6 +24,13 @@ from . import views
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('', views.to_index, name='to-index'),
+    path('sign_up/', views.to_sign_up, name='to-sign_up'),
+    path('main/', views.to_main, name='to-main'),
+    path('login/', views.login, name='login'),
+    path('survey/', views.to_survey, name='to-survey'),
+    path('logout/', views.log_out, name='log-out'),
+    path('about_ib/', views.to_about_ib, name='to-about_ib'),
+    path('about_ib_course_search/', views.to_about_ib_course_search, name='to-about_ib_course_search'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) #이 줄 추가
