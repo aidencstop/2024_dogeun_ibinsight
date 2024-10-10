@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "ibinsight",
     "member",
     "manager",
+    "forum",
 ]
 
 MIDDLEWARE = [

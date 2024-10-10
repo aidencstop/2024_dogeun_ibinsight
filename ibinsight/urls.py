@@ -15,11 +15,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import include, path
 from django.conf import settings #요거
 from django.conf.urls.static import static #이 두줄과
 from member.views import member_login
 from . import views
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -28,9 +29,11 @@ urlpatterns = [
     path('main/', views.to_main, name='to-main'),
     path('login/', views.login, name='login'),
     path('survey/', views.to_survey, name='to-survey'),
+    path('recommend/', views.recommend, name='recommend'),
     path('logout/', views.log_out, name='log-out'),
     path('about_ib/', views.to_about_ib, name='to-about_ib'),
     path('about_ib_course_search/', views.to_about_ib_course_search, name='to-about_ib_course_search'),
+    path('forum/', include('forum.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) #이 줄 추가

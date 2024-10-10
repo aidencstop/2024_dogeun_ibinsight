@@ -21,7 +21,7 @@
   <section class="sectionnav">
     <div class="w-layout-blockcontainer containernav w-container">
       <div class="divblocknavmaingrid">
-        <div id="w-node-_17c9d079-c3c6-f931-0dfe-7ccdf33b1fac-f25d558d" class="divblocknavicon"><img src="images/Logo_BlackWhite.png" loading="lazy" id="w-node-_17c9d079-c3c6-f931-0dfe-7ccdf33b1fad-f25d558d" alt="" class="imagenavicon"></div>
+        <div id="w-node-_17c9d079-c3c6-f931-0dfe-7ccdf33b1fac-f25d558d" class="divblocknavicon"><img src="{% static 'images/Logo_BlackWhite.png' %}" loading="lazy" id="w-node-_17c9d079-c3c6-f931-0dfe-7ccdf33b1fad-f25d558d" alt="" class="imagenavicon"></div>
         <div id="w-node-_17c9d079-c3c6-f931-0dfe-7ccdf33b1fae-f25d558d" class="divblocknavmenugrid">
           <a id="w-node-_17c9d079-c3c6-f931-0dfe-7ccdf33b1faf-f25d558d" class="divblocknavmenubutton" href="{% url 'to-main' %}" style="text-decoration:none">
             <h1 class="headingnavmenubutton">Home</h1>
@@ -29,12 +29,12 @@
           <a id="w-node-_17c9d079-c3c6-f931-0dfe-7ccdf33b1fb2-f25d558d" class="divblocknavmenubutton" href="{% url 'to-about_ib' %}" style="text-decoration:none">
             <h1 class="headingnavmenubutton">About IB</h1>
           </a>
-          <div id="w-node-_17c9d079-c3c6-f931-0dfe-7ccdf33b1fb5-f25d558d" class="divblocknavmenubutton">
+          <a id="w-node-_17c9d079-c3c6-f931-0dfe-7ccdf33b1fb5-f25d558d" class="divblocknavmenubutton" href="{% url 'to-survey' %}" style="text-decoration:none">
             <h1 class="headingnavmenubutton">Recommendation</h1>
-          </div>
-          <div id="w-node-_17c9d079-c3c6-f931-0dfe-7ccdf33b1fb8-f25d558d" class="divblocknavmenubutton">
+          </a>
+          <a id="w-node-_17c9d079-c3c6-f931-0dfe-7ccdf33b1fb8-f25d558d" class="divblocknavmenubutton" href="{% url 'forum_list' %}" style="text-decoration:none">
             <h1 class="headingnavmenubutton">Forum</h1>
-          </div>
+          </a>
           <a id="w-node-_17c9d079-c3c6-f931-0dfe-7ccdf33b1fbb-f25d558d" class="divblocknavlogoutbutton" href="{% url 'log-out' %}" style="text-decoration:none">
             <h1 id="w-node-_17c9d079-c3c6-f931-0dfe-7ccdf33b1fbc-f25d558d" class="headingnavlogoutbutton">LOG OUT</h1>
           </a>
@@ -78,15 +78,18 @@
                 <div id="w-node-cc49ddbf-1877-85e8-dcf0-4a44979d2079-f25d558d" class="divblockmainrecentforumheader">
                   <h1 id="w-node-cc49ddbf-1877-85e8-dcf0-4a44979d207a-f25d558d" class="headingmainrecentforumsheader">Details</h1>
                 </div>
+                {% for date, title, pk in last_four_post_tuple_list %}
                 <div id="w-node-_37ad7684-dbf8-3f5e-8473-4484ff478328-f25d558d" class="divblockmainrecentforumtabledate">
-                  <h1 id="w-node-_1d78c812-b79e-77a2-5a86-95e6c00d851e-f25d558d" class="headingmainrecentforumstable">07-26-2024</h1>
+                  <h1 id="w-node-_1d78c812-b79e-77a2-5a86-95e6c00d851e-f25d558d" class="headingmainrecentforumstable">{{date}}</h1>
                 </div>
                 <div id="w-node-ed69a9e5-028c-6c4f-1f01-828c767f0330-f25d558d" class="divblockmainrecentforumtabledetails">
-                  <h1 id="w-node-ed69a9e5-028c-6c4f-1f01-828c767f0331-f25d558d" class="headingmainrecentforumstabledetail">07-26-2024</h1>
-                  <div id="w-node-f6a87caa-7e2f-b695-5b73-ce779f4a4e2a-f25d558d" class="divblockmainrecentforumtabledetailsbutton">
+                  <h1 id="w-node-ed69a9e5-028c-6c4f-1f01-828c767f0331-f25d558d" class="headingmainrecentforumstabledetail">
+                    {{title}}</h1>
+                  <a id="w-node-f6a87caa-7e2f-b695-5b73-ce779f4a4e2a-f25d558d" class="divblockmainrecentforumtabledetailsbutton" style="text-decoration:none; cursor:pointer" href="/forum/post/{{pk}}/">
                     <h1 id="w-node-_17a2e741-3ca2-5259-a019-f809f07a13f9-f25d558d" class="headingmainrecentforumstabledetailsbutton">View</h1>
-                  </div>
+                  </a>
                 </div>
+                {% endfor %}
               </div>
             </div>
           </div>
@@ -111,7 +114,7 @@
                     <h1 id="w-node-_3e547d14-dd4c-0a8e-a5a7-676ca3c4bc08-f25d558d" class="headingmainchartaxisname">Sciences</h1>
                   </div>
                 </div>
-                <img src="/static/images/my_plot.jpg" loading="lazy" id="w-node-_9330d295-592f-967b-0522-4f7333d91e7f-f25d558d" alt="" class="imagechart">
+                <img src="/static/plot/{{curr_user.username}}.jpg" loading="lazy" id="w-node-_9330d295-592f-967b-0522-4f7333d91e7f-f25d558d" alt="/static/plot/NO IMAGE.jpg" class="imagechart">
                 <div id="w-node-_4e0948b2-8b03-91c9-3a25-12239f709664-f25d558d" class="divblockmainchartrightgrid">
                   <div id="w-node-_5037d0d7-13c9-2139-5a9e-62c1f8894036-f25d558d" class="divblockmainchartaxis">
                     <h1 id="w-node-f60d0228-8224-3db5-7e3f-0fc6e941d5b1-f25d558d" class="headingmainchartaxis">Group 1</h1>
@@ -134,42 +137,21 @@
                 <div id="w-node-_4f881ee1-6d06-070f-7158-a32ce37fa608-f25d558d" class="divblockmainrecommendationheader">
                   <h1 id="w-node-_4f881ee1-6d06-070f-7158-a32ce37fa609-f25d558d" class="headingmainrecommendationheader">SL</h1>
                 </div>
+                {% for hl, sl in hl_sl_tuple_list %}
                 <div id="w-node-af5adec9-b179-7cdc-459a-7bdf733fc986-f25d558d" class="divblockmainrecommendationtabledetails">
-                  <h1 id="w-node-af5adec9-b179-7cdc-459a-7bdf733fc987-f25d558d" class="headingmainrecommendationtabledetail">07-26-2024</h1>
-                  <div id="w-node-af5adec9-b179-7cdc-459a-7bdf733fc989-f25d558d" class="divblockmainrecommendationtabledetailsbutton">
-                    <h1 id="w-node-af5adec9-b179-7cdc-459a-7bdf733fc98a-f25d558d" class="headingmainrecomendationtabledetailsbutton">View</h1>
-                  </div>
+                  <h1 id="w-node-af5adec9-b179-7cdc-459a-7bdf733fc987-f25d558d" class="headingmainrecommendationtabledetail">
+                    {{hl}}</h1>
+<!--                  <div id="w-node-af5adec9-b179-7cdc-459a-7bdf733fc989-f25d558d" class="divblockmainrecommendationtabledetailsbutton">-->
+<!--                    <h1 id="w-node-af5adec9-b179-7cdc-459a-7bdf733fc98a-f25d558d" class="headingmainrecomendationtabledetailsbutton">View</h1>-->
+<!--                  </div>-->
                 </div>
                 <div id="w-node-a37ba220-f18c-a11b-76a5-ead10b56bcc2-f25d558d" class="divblockmainrecommendationtabledetails">
-                  <h1 id="w-node-a37ba220-f18c-a11b-76a5-ead10b56bcc3-f25d558d" class="headingmainrecommendationtabledetail">07-26-2024</h1>
-                  <div id="w-node-a37ba220-f18c-a11b-76a5-ead10b56bcc5-f25d558d" class="divblockmainrecommendationtabledetailsbutton">
-                    <h1 id="w-node-a37ba220-f18c-a11b-76a5-ead10b56bcc6-f25d558d" class="headingmainrecomendationtabledetailsbutton">View</h1>
-                  </div>
+                  <h1 id="w-node-a37ba220-f18c-a11b-76a5-ead10b56bcc3-f25d558d" class="headingmainrecommendationtabledetail">{{sl}}</h1>
+<!--                  <div id="w-node-a37ba220-f18c-a11b-76a5-ead10b56bcc5-f25d558d" class="divblockmainrecommendationtabledetailsbutton">-->
+<!--                    <h1 id="w-node-a37ba220-f18c-a11b-76a5-ead10b56bcc6-f25d558d" class="headingmainrecomendationtabledetailsbutton">View</h1>-->
+<!--                  </div>-->
                 </div>
-                <div id="w-node-e1bebb9c-c52b-2aa4-bae9-87c420bd0ae3-f25d558d" class="divblockmainrecommendationtabledetails">
-                  <h1 id="w-node-e1bebb9c-c52b-2aa4-bae9-87c420bd0ae4-f25d558d" class="headingmainrecommendationtabledetail">07-26-2024</h1>
-                  <div id="w-node-e1bebb9c-c52b-2aa4-bae9-87c420bd0ae6-f25d558d" class="divblockmainrecommendationtabledetailsbutton">
-                    <h1 id="w-node-e1bebb9c-c52b-2aa4-bae9-87c420bd0ae7-f25d558d" class="headingmainrecomendationtabledetailsbutton">View</h1>
-                  </div>
-                </div>
-                <div id="w-node-_55c6afd7-c09a-d636-282e-e095137e4d4e-f25d558d" class="divblockmainrecommendationtabledetails">
-                  <h1 id="w-node-_55c6afd7-c09a-d636-282e-e095137e4d4f-f25d558d" class="headingmainrecommendationtabledetail">07-26-2024</h1>
-                  <div id="w-node-_55c6afd7-c09a-d636-282e-e095137e4d51-f25d558d" class="divblockmainrecommendationtabledetailsbutton">
-                    <h1 id="w-node-_55c6afd7-c09a-d636-282e-e095137e4d52-f25d558d" class="headingmainrecomendationtabledetailsbutton">View</h1>
-                  </div>
-                </div>
-                <div id="w-node-_2263673d-3ab8-eb22-0e67-f5f65d1fad09-f25d558d" class="divblockmainrecommendationtabledetails">
-                  <h1 id="w-node-_2263673d-3ab8-eb22-0e67-f5f65d1fad0a-f25d558d" class="headingmainrecommendationtabledetail">07-26-2024</h1>
-                  <div id="w-node-_2263673d-3ab8-eb22-0e67-f5f65d1fad0c-f25d558d" class="divblockmainrecommendationtabledetailsbutton">
-                    <h1 id="w-node-_2263673d-3ab8-eb22-0e67-f5f65d1fad0d-f25d558d" class="headingmainrecomendationtabledetailsbutton">View</h1>
-                  </div>
-                </div>
-                <div id="w-node-_4e6a1fc4-9b6c-273b-d162-058724fc7839-f25d558d" class="divblockmainrecommendationtabledetails">
-                  <h1 id="w-node-_4e6a1fc4-9b6c-273b-d162-058724fc783a-f25d558d" class="headingmainrecommendationtabledetail">07-26-2024</h1>
-                  <div id="w-node-_4e6a1fc4-9b6c-273b-d162-058724fc783c-f25d558d" class="divblockmainrecommendationtabledetailsbutton">
-                    <h1 id="w-node-_4e6a1fc4-9b6c-273b-d162-058724fc783d-f25d558d" class="headingmainrecomendationtabledetailsbutton">View</h1>
-                  </div>
-                </div>
+                {% endfor %}
               </div>
             </div>
           </div>
