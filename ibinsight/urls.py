@@ -32,7 +32,8 @@ urlpatterns = [
     path('recommend/', views.recommend, name='recommend'),
     path('logout/', views.log_out, name='log-out'),
     path('about_ib/', views.to_about_ib, name='to-about_ib'),
-    path('about_ib_course_search/', views.to_about_ib_course_search, name='to-about_ib_course_search'),
+    path('about_ib_course_search/', views.to_about_ib_course_search_default, name='to-about_ib_course_search-default'),
+    path('about_ib_course_search/<int:pk>/', views.to_about_ib_course_search, name='to-about_ib_course_search'),
     path('forum/', include('forum.urls')),
 ]
 

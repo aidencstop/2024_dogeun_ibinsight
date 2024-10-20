@@ -85,6 +85,77 @@ def to_sign_up(request):
             )
             new_user.save()
             messages.success(request, "User added successfully!")
+
+            # default plot
+            # Libraries
+            import matplotlib.pyplot as plt
+            import pandas as pd
+            from math import pi
+
+            from pathlib import Path
+            # Build paths inside the project like this: BASE_DIR / 'subdir'.
+            BASE_DIR = Path(__file__).resolve().parent.parent
+
+            import pickle
+
+            # Set data
+            df = pd.DataFrame({
+                'Group1: Studies in Language and Literature': [0],
+                'Group2: Language Acquisition': [0],
+                'Group3: Individuals and Societies (Humanities)': [0],
+                'Group4: Sciences': [0],
+                'Group5: Mathematics': [0],
+                'Group6: Arts': [0],
+            })
+
+            # ------- PART 1: Define a function that do a plot for one line of the dataset!
+
+            def make_spider(row, title, color):
+                # number of variable
+                categories = list(df)[0:]
+                N = len(categories)
+
+                # What will be the angle of each axis in the plot? (we divide the plot / number of variable)
+                angles = [n / float(N) * 2 * pi for n in range(N)]
+                angles += angles[:1]
+
+                # Initialise the spider plot
+                ax = plt.subplot(2, 2, row + 1, polar=True, )
+
+                # If you want the first axis to be on top:
+                ax.set_theta_offset((pi / 6) * 2)
+                ax.set_theta_direction(-1)
+
+                # Draw one axe per variable + add labels labels yet
+                plt.xticks(angles[:-1], [], color='grey', size=10)
+
+                # Draw ylabels
+                ax.set_rlabel_position(0)
+                plt.yticks([5, 10], ["", ""], color="grey", size=7)
+                plt.ylim(0, 10)
+
+                # Ind1
+                values = df.loc[row].values.flatten().tolist()
+                values += values[:1]
+                ax.plot(angles, values, color=color, linewidth=2, linestyle='solid')
+                ax.fill(angles, values, color=color, alpha=0.4)
+
+                # Add a title
+                # plt.title(title, size=11, color=color, y=1.1)
+
+            # ------- PART 2: Apply the function to all individuals
+            # initialize the figure
+            plt.figure(figsize=(20, 20), dpi=96, facecolor='#f7f7f7')
+
+            # Create a color palette:
+            my_palette = plt.cm.get_cmap("Set1", 20)
+
+            # Loop to plot
+            row = 0
+            make_spider(row=row, title='group ', color=my_palette(0))
+
+            plt.savefig(os.path.join(BASE_DIR, 'static') + "/plot/" + username + '.jpg', dpi=96, bbox_inches='tight')
+
             return redirect('to-index')
 
         else:
@@ -123,19 +194,22 @@ def to_main(request):
     # Build paths inside the project like this: BASE_DIR / 'subdir'.
     BASE_DIR = Path(__file__).resolve().parent.parent
 
-
     import pickle
     username = curr_user.username
-    if os.path.isfile(os.path.join(BASE_DIR, 'static') + "/plot/" + username + '.pickle'):
-        with open(file=os.path.join(BASE_DIR, 'static') + "/plot/" + username + '.pickle', mode='rb') as f:
+    if os.path.isfile(os.path.join(BASE_DIR, 'static') + "/plot/" + username + '_subject_name.pickle'):
+        with open(file=os.path.join(BASE_DIR, 'static') + "/plot/" + username + '_subject_name.pickle', mode='rb') as f:
             sl_hl_dict = pickle.load(f)
+        with open(file=os.path.join(BASE_DIR, 'static') + "/plot/" + username + '_subject_pk.pickle', mode='rb') as f:
+            sl_hl_pk_dict = pickle.load(f)
         sl_list = sl_hl_dict['sl']
         hl_list = sl_hl_dict['hl']
+        sl_pk_list = sl_hl_pk_dict['sl']
+        hl_pk_list = sl_hl_pk_dict['hl']
         hl_sl_tuple_list = []
         for i in range(len(sl_list)):
-            hl_sl_tuple_list.append((hl_list[i], sl_list[i]))
+            hl_sl_tuple_list.append((hl_list[i], hl_pk_list[i], sl_list[i], sl_pk_list[i]))
     else:
-        hl_sl_tuple_list = []
+        hl_sl_tuple_list = [('N/A', 0, 'N/A', 0), ('N/A', 0, 'N/A', 0), ('N/A', 0, 'N/A', 0)]
 
     context = {
         'curr_user': curr_user,
@@ -143,6 +217,7 @@ def to_main(request):
         'post_list': post_list,
         'hl_sl_tuple_list': hl_sl_tuple_list,
     }
+    print(hl_sl_tuple_list)
 
     return render(request, 'main.html', context)
 
@@ -156,7 +231,7 @@ def to_about_ib(request):
     return render(request, 'aboutib.html', context)
 
 @login_required
-def to_about_ib_course_search(request):
+def to_about_ib_course_search_default(request):
     group_list = Group.objects.all()
     course_list = Course.objects.all()
 
@@ -172,10 +247,12 @@ def to_about_ib_course_search(request):
         course_name_list.append(course.name)
         entry_guidance_list.append(course.entry_guidance)
         course_aim_list.append(course.course_aims)
+        print(course.name, course.pk)
 
     curr_user = request.user
 
     context = {
+        'selected_pk': 0,
         'curr_user': curr_user,
         'group_list': group_list,
         'course_list': course_list,
@@ -186,6 +263,55 @@ def to_about_ib_course_search(request):
         'course_aim_list': course_aim_list,
     }
     return render(request, 'aboutibcoursesearch.html', context)
+
+@login_required
+def to_about_ib_course_search(request, pk):
+    group_list = Group.objects.all()
+    course_list = Course.objects.all()
+
+    group_id_list = []
+    course_id_list = []
+    course_name_list = []
+    entry_guidance_list = []
+    course_aim_list = []
+    course_pk_list = []
+
+    selected_course = Course.objects.get(pk=pk)
+    selected_course_entry_guidance = selected_course.entry_guidance.replace("<br>", "")
+    selected_course_aims = selected_course.course_aims.replace("<br>", "")
+    selected_group_id = selected_course.group.id
+    selected_group = selected_course.group.name
+
+    for course in course_list:
+        group_id_list.append(course.group.id)
+        course_id_list.append(course.id)
+        course_name_list.append(course.name)
+        entry_guidance_list.append(course.entry_guidance)
+        course_aim_list.append(course.course_aims)
+        course_pk_list.append(course.pk)
+        # print(course.name, course.pk)
+
+    curr_user = request.user
+
+    context = {
+        'selected_pk': pk,
+        'selected_course': selected_course,
+        'curr_user': curr_user,
+        'group_list': group_list,
+        'course_list': course_list,
+        'course_name_list': course_name_list,
+        'group_id_list': group_id_list,
+        'course_id_list': course_id_list,
+        'entry_guidance_list': entry_guidance_list,
+        'course_aim_list': course_aim_list,
+        'course_pk_list': course_pk_list,
+        'selected_course_entry_guidance': selected_course_entry_guidance,
+        'selected_course_aims': selected_course_aims,
+        'selected_group': selected_group,
+        'selected_group_id': selected_group_id,
+    }
+    return render(request, 'aboutibcoursesearch.html', context)
+
 
 # View function for counselor logout
 @login_required
@@ -213,12 +339,20 @@ def get_recommendation(IGCSE_grades, input_dict):
     # Full list of offered IB Subjects
     subject_list = [
         ["Maths AA SL", "Maths AA HL", "Maths AI SL", "Maths AI HL"], # ok
-        ["Physics SL", "Physics HL", "Chem SL", "Chem HL", "Bio SL", "Bio HL", "CS SL", "CS HL", "ESS SL"],
-        ["Econ SL", "Econ HL", "Geo SL", "Geo HL", "History SL", "History HL", "Psych SL", "Psych HL"],
+        ["Physics SL", "Physics HL", "Chemistry SL", "Chemistry HL", "Biology SL", "Biology HL", "Computer Science SL", "Computer Science HL", "Environmental Systems and Societies SL"],
+        ["Economics SL", "Economics HL", "Geography SL", "Geography HL", "History SL", "History HL", "Psychology SL", "Psychology HL"],
         ["Korean A SL", "Korean A HL", "Spanish AB SL", "Spanish B SL", "Spanish B HL", "French AB SL",
-         "French B SL", "French B HL", "Mandarin AB SL", "Mandarin B SL", "Mandarin B HL"],
-        ["Eng A SL", "Eng A HL"], # ok
-        ["Music SL", "Music HL", "Theatre SL", "Theatre HL", "Art SL", "Art HL", "Film SL", "Film HL"]
+         "French B SL", "French B HL", "Mandarin AB SL", "Chinese Language B SL", "Chinese Language B HL"],
+        ["English A SL", "English A HL"], # ok
+        ["Music SL", "Music HL", "Theatre SL", "Theatre HL", "(Visual Arts)Art SL", "(Visual Arts)Art HL", "Film SL", "Film HL"]
+    ]
+    subject_pk_list = [
+        [24, 25, 26, 27],
+        [32, 33, 34, 35, 36, 37, 38, 39, 40],
+        [16, 17, 18, 19, 20, 21, 22, 23],
+        [3, 4, 5, 6, 7, 8, 9, 10, 13, 14, 15],
+        [1, 2],
+        [28, 29, 43, 44, 30, 31, 41, 42]
     ]
 
     # matrix corresponding to subject_list; 0 means not considered for recommendation
@@ -440,12 +574,15 @@ def get_recommendation(IGCSE_grades, input_dict):
     print("final subjects:", Final_subjects)
     subject_list = [
         ["Maths AA SL", "Maths AA HL", "Maths AI SL", "Maths AI HL"],  # ok
-        ["Physics SL", "Physics HL", "Chem SL", "Chem HL", "Bio SL", "Bio HL", "CS SL", "CS HL", "ESS SL"],
-        ["Econ SL", "Econ HL", "Geo SL", "Geo HL", "History SL", "History HL", "Psych SL", "Psych HL"],
+        ["Physics SL", "Physics HL", "Chemistry SL", "Chemistry HL", "Biology SL", "Biology HL", "Computer Science SL",
+         "Computer Science HL", "Environmental Systems and Societies SL"],
+        ["Economics SL", "Economics HL", "Geography SL", "Geography HL", "History SL", "History HL", "Psychology SL",
+         "Psychology HL"],
         ["Korean A SL", "Korean A HL", "Spanish AB SL", "Spanish B SL", "Spanish B HL", "French AB SL",
-         "French B SL", "French B HL", "Mandarin AB SL", "Mandarin B SL", "Mandarin B HL"],
-        ["Eng A SL", "Eng A HL"],  # ok
-        ["Music SL", "Music HL", "Theatre SL", "Theatre HL", "Art SL", "Art HL", "Film SL", "Film HL"]
+         "French B SL", "French B HL", "Mandarin AB SL", "Chinese Language B SL", "Chinese Language B HL"],
+        ["English A SL", "English A HL"],  # ok
+        ["Music SL", "Music HL", "Theatre SL", "Theatre HL", "(Visual Arts)Art SL", "(Visual Arts)Art HL", "Film SL",
+         "Film HL"]
     ]
     final_subject_code_list = []
     for fs in Final_subjects:
@@ -463,14 +600,24 @@ def get_plot(username, code_list):
 
     subject_list = [
         ["Maths AA SL", "Maths AA HL", "Maths AI SL", "Maths AI HL"],  # ok
-        ["Physics SL", "Physics HL", "Chem SL", "Chem HL", "Bio SL", "Bio HL", "CS SL", "CS HL", "ESS SL"],
-        ["Econ SL", "Econ HL", "Geo SL", "Geo HL", "History SL", "History HL", "Psych SL", "Psych HL"],
+        ["Physics SL", "Physics HL", "Chemistry SL", "Chemistry HL", "Biology SL", "Biology HL", "Computer Science SL",
+         "Computer Science HL", "Environmental Systems and Societies SL"],
+        ["Economics SL", "Economics HL", "Geography SL", "Geography HL", "History SL", "History HL", "Psychology SL",
+         "Psychology HL"],
         ["Korean A SL", "Korean A HL", "Spanish AB SL", "Spanish B SL", "Spanish B HL", "French AB SL",
-         "French B SL", "French B HL", "Mandarin AB SL", "Mandarin B SL", "Mandarin B HL"],
-        ["Eng A SL", "Eng A HL"],  # ok
-        ["Music SL", "Music HL", "Theatre SL", "Theatre HL", "Art SL", "Art HL", "Film SL", "Film HL"]
+         "French B SL", "French B HL", "Mandarin AB SL", "Chinese Language B SL", "Chinese Language B HL"],
+        ["English A SL", "English A HL"],  # ok
+        ["Music SL", "Music HL", "Theatre SL", "Theatre HL", "(Visual Arts)Art SL", "(Visual Arts)Art HL", "Film SL",
+         "Film HL"]
     ]
-
+    subject_pk_list = [
+        [24, 25, 26, 27],
+        [32, 33, 34, 35, 36, 37, 38, 39, 40],
+        [16, 17, 18, 19, 20, 21, 22, 23],
+        [3, 4, 5, 6, 7, 8, 9, 10, 13, 14, 15],
+        [1, 2],
+        [28, 29, 43, 44, 30, 31, 41, 42]
+    ]
 
     # finial subjects codes: ['01', '51', '17', '26', '30', '40']
     g_dict = {
@@ -483,25 +630,35 @@ def get_plot(username, code_list):
     }
     sl_list = []
     hl_list = []
+    sl_pk_list = []
+    hl_pk_list = []
     for code in code_list:
         target_g = code[0]
         if len(g_dict[target_g])==0:
             if subject_list[int(code[0])][int(code[1])][-2:]=="HL":
                 g_dict[target_g] = [10]
                 hl_list.append(subject_list[int(code[0])][int(code[1])])
+                hl_pk_list.append(subject_pk_list[int(code[0])][int(code[1])])
             else:
                 g_dict[target_g] = [5]
                 sl_list.append(subject_list[int(code[0])][int(code[1])])
+                sl_pk_list.append(subject_pk_list[int(code[0])][int(code[1])])
         else:
             if subject_list[int(code[0])][int(code[1])][-2:]=="HL":
                 g_dict['5'] = [10]
                 hl_list.append(subject_list[int(code[0])][int(code[1])])
+                hl_pk_list.append(subject_pk_list[int(code[0])][int(code[1])])
             else:
                 g_dict['5'] = [5]
                 sl_list.append(subject_list[int(code[0])][int(code[1])])
+                sl_pk_list.append(subject_pk_list[int(code[0])][int(code[1])])
     sl_hl_dict = {
         'sl': sl_list,
         'hl': hl_list,
+    }
+    sl_hl_pk_dict = {
+        'sl': sl_pk_list,
+        'hl': hl_pk_list,
     }
 
 
@@ -511,8 +668,10 @@ def get_plot(username, code_list):
 
     import pickle
 
-    with open(file=os.path.join(BASE_DIR, 'static')+"/plot/"+username+'.pickle', mode='wb') as f:
+    with open(file=os.path.join(BASE_DIR, 'static')+"/plot/"+username+'_subject_name.pickle', mode='wb') as f:
         pickle.dump(sl_hl_dict, f)
+    with open(file=os.path.join(BASE_DIR, 'static')+"/plot/"+username+'_subject_pk.pickle', mode='wb') as f:
+        pickle.dump(sl_hl_pk_dict, f)
 
     # Set data
     df = pd.DataFrame({
@@ -594,6 +753,9 @@ def recommend(request):
         major = request.POST.get('major')
         learningpreference = request.POST.get('learningpreference')
         tookaddmaths = request.POST.get('tookaddmaths')
+
+        if 'x' in [country, major, learningpreference, tookaddmaths]:
+            return redirect('to-survey')
 
         # Dictionary of grades that the student will input on the website
         IGCSE_grades = {

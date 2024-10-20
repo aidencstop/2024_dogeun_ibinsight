@@ -380,9 +380,9 @@ body {
 }
 
 .imagenavicon {
-  width: 10vw;
-  height: 3vw;
-  max-height: 3vw;
+  width: 16vh;
+  height: 4vh;
+  max-height: 4vh;
 }
 
 .containersurveytitle {
@@ -466,10 +466,17 @@ body {
   line-height: 3vh;
 }
 
-.textfieldsurveyquestiontext, .select-field {
+.textfieldsurveyquestiontext {
   background-color: #eee;
   border-radius: 1vw;
   max-width: 95%;
+}
+
+.select-field {
+  background-color: #eee;
+  border-radius: 1vw;
+  max-width: 95%;
+  margin-bottom: 5px;
 }
 
 .textfieldhomeemail, .textfieldhomepassword {
@@ -488,12 +495,12 @@ body {
 }
 
 .divblockmaingrid {
-  grid-column-gap: 2vw;
-  grid-row-gap: 2vw;
-  grid-template-rows: 6vw minmax(auto, 1fr);
+  grid-column-gap: 4vh;
+  grid-row-gap: 4vh;
+  grid-template-rows: 10vh minmax(auto, 1fr);
   grid-template-columns: 1fr;
   grid-auto-columns: 1fr;
-  margin-top: 2vh;
+  margin-top: 4vh;
   display: grid;
 }
 
@@ -931,7 +938,7 @@ body {
 .divblockaboutibuppergrid {
   grid-column-gap: 0px;
   grid-row-gap: 0px;
-  grid-template-rows: auto;
+  grid-template-rows: 7.5vh;
   grid-template-columns: 1fr 1fr;
   grid-auto-columns: 1fr;
   display: grid;
@@ -978,20 +985,20 @@ body {
 }
 
 .divblockaboutibcoursesearchgrid {
-  grid-column-gap: 2vw;
-  grid-row-gap: 2vw;
-  grid-template-rows: 6vw 6vw auto auto;
+  grid-column-gap: 4vh;
+  grid-row-gap: 4vh;
+  grid-template-rows: 7.5vh 8.5vh auto auto;
   grid-template-columns: 1fr;
   grid-auto-rows: 50vw;
   grid-auto-columns: 1fr;
-  margin-top: 2vh;
+  margin-top: 4vh;
   display: grid;
 }
 
 .divblockaboutibcoursesearchselectiongrid {
   grid-column-gap: 0px;
   grid-row-gap: 0px;
-  grid-template-rows: auto;
+  grid-template-rows: 9vh;
   grid-template-columns: 2fr 3fr;
   grid-auto-columns: 1fr;
   height: 9vh;
@@ -1002,11 +1009,11 @@ body {
 .divblockaboutibcoursesearchselectgroup {
   grid-column-gap: 0px;
   grid-row-gap: 0px;
-  grid-template-rows: 6vw;
+  grid-template-rows: 9vh;
   grid-template-columns: 1fr;
   grid-auto-columns: 1fr;
-  height: 100%;
-  max-height: 100%;
+  height: 9vh;
+  max-height: 9vh;
   display: grid;
 }
 
@@ -1016,7 +1023,7 @@ body {
 
 .fieldlabelgroup {
   color: #bc2731;
-  margin-bottom: .5vw;
+  margin-bottom: .75vh;
   font-size: 2.3vh;
   line-height: 2.3vh;
 }
@@ -1030,17 +1037,17 @@ body {
 .divblockaboutibcoursesearchselectcourse {
   grid-column-gap: 0px;
   grid-row-gap: 0px;
-  grid-template-rows: 6vw;
+  grid-template-rows: 9vh;
   grid-template-columns: 1fr;
   grid-auto-columns: 1fr;
-  height: 100%;
-  max-height: 100%;
+  height: 9vh;
+  max-height: 9vh;
   display: grid;
 }
 
 .fieldlabelcourse {
   color: #bc2731;
-  margin-bottom: .5vw;
+  margin-bottom: .75vh;
   font-size: 2.3vh;
   line-height: 2.3vh;
 }
@@ -1051,8 +1058,8 @@ body {
   border-radius: 1vw;
   width: 95%;
   max-width: 95%;
-  height: 100%;
-  max-height: 100%;
+  height: 5.5vh;
+  max-height: 5.5vh;
   font-size: 2vh;
   line-height: 2vh;
 }
@@ -1063,8 +1070,8 @@ body {
   border-radius: 1vw;
   width: 100%;
   max-width: 100%;
-  height: 100%;
-  max-height: 100%;
+  height: 5.5vh;
+  max-height: 5.5vh;
   font-size: 2vh;
   line-height: 2vh;
 }
@@ -1111,7 +1118,7 @@ body {
   color: #bc2731;
   margin-top: 0;
   margin-bottom: 0;
-  font-size: 3vh;
+  font-size: 2.2vh;
   font-weight: 400;
   line-height: 3vh;
 }
@@ -1385,7 +1392,7 @@ body {
 .divblockmainmodaldetailrowgrid {
   grid-column-gap: 0px;
   grid-row-gap: 0px;
-  grid-template-rows: auto;
+  grid-template-rows: min-content;
   grid-template-columns: max-content 1fr;
   grid-auto-columns: 1fr;
   height: 100%;
@@ -1515,20 +1522,10 @@ body {
   line-height: 2vh;
 }
 
-.headingmainchartaxis2name {
+.headingmainchartaxis2name, .headingmainchartaxis3name {
   text-align: left;
   margin-top: 0;
   margin-bottom: 0;
-  font-size: 1.5vh;
-  font-weight: 400;
-  line-height: 2vh;
-}
-
-.headingmainchartaxis3name {
-  text-align: left;
-  margin-top: 0;
-  margin-bottom: 0;
-  padding-left: 5vh;
   font-size: 1.5vh;
   font-weight: 400;
   line-height: 2vh;
@@ -1553,7 +1550,7 @@ body {
 .divblocksurveyquestionsnongradegrid {
   grid-column-gap: 0px;
   grid-row-gap: 0px;
-  grid-template-rows: min-content min-content min-content min-content auto;
+  grid-template-rows: min-content min-content min-content min-content min-content min-content;
   grid-template-columns: 1fr;
   grid-auto-columns: 1fr;
   height: 100%;
@@ -1618,6 +1615,7 @@ body {
   max-width: 15vh;
   height: 6vh;
   max-height: 6vh;
+  margin-bottom: 15px;
   display: grid;
 }
 
@@ -1627,6 +1625,103 @@ body {
   margin-bottom: 0;
   font-size: 3vh;
   line-height: 4vh;
+}
+
+.divblockaboutibgrid {
+  grid-column-gap: 4vh;
+  grid-row-gap: 4vh;
+  grid-template-rows: 7.5vh minmax(auto, 1fr);
+  grid-template-columns: 1fr;
+  grid-auto-columns: 1fr;
+  margin-top: 4vh;
+  display: grid;
+}
+
+.form-block {
+  grid-column-gap: 16px;
+  grid-row-gap: 16px;
+  grid-template-rows: auto;
+  grid-template-columns: 1fr;
+  grid-auto-columns: 1fr;
+  display: grid;
+}
+
+.divblocksurveyexplanation {
+  background-color: #ebe1db;
+  border: 1px solid #ebe1db;
+  border-radius: 7px;
+  padding: 5px;
+}
+
+.paragraph {
+  margin-bottom: 0;
+  font-size: 2vh;
+  line-height: 2.5vh;
+}
+
+@media screen and (max-width: 991px) {
+  .divblockaboutibcoursesearchgrid {
+    grid-auto-rows: 75vh;
+  }
+
+  .divblockaboutibcoursesearchselectiongrid {
+    grid-template-rows: 8.5vh;
+  }
+
+  .divblockaboutibcoursesearchselectgroup {
+    grid-template-rows: 100%;
+  }
+
+  .fieldlabelgroup {
+    margin-bottom: 1vh;
+  }
+
+  .divblockaboutibcoursesearchselectcourse {
+    grid-template-rows: 100%;
+  }
+
+  .fieldlabelcourse {
+    margin-bottom: 1vh;
+  }
+
+  .selectfieldgroup, .selectfieldcourse {
+    margin-bottom: 0;
+  }
+
+  .modal-wrapper-hidden {
+    display: none;
+  }
+
+  .containermainmodal {
+    width: 60vw;
+    max-width: none;
+    height: 50vh;
+    padding-top: 1.5vh;
+    padding-bottom: 1.5vh;
+  }
+
+  .divblockmainmodalgrid {
+    grid-template-rows: 1fr 5fr 1fr;
+  }
+
+  .divblockmainmodaldetailrowgrid {
+    grid-template-rows: min-content;
+  }
+
+  .divblockaboutibcoursesearchexplanationgrid {
+    grid-column-gap: 3vh;
+    grid-row-gap: 3vh;
+    padding: 3vh 1.5vh;
+  }
+
+  .headingaboutibcoursesearchtexttitle {
+    padding-left: 1.5vh;
+  }
+
+  .paragraphaboutibcoursesearchtext {
+    padding-left: 1.5vh;
+    padding-right: 1.5vh;
+  }
 }
 
 #w-node-b63e7e0b-674e-3dfb-04ce-5705d3391748-16edd2ce {
@@ -1720,7 +1815,7 @@ body {
 }
 
 #w-node-_23592f1d-f6ba-1bc0-6ff8-c9ed2d136a86-f25d558d {
-  justify-self: start;
+  justify-self: end;
 }
 
 #w-node-_23592f1d-f6ba-1bc0-6ff8-c9ed2d136a87-f25d558d {
@@ -1755,8 +1850,16 @@ body {
   place-self: start;
 }
 
+#w-node-_3580d02d-2f25-3f5c-14c7-0f46e47d0746-f25d558d {
+  justify-self: start;
+}
+
 #w-node-_3580d02d-2f25-3f5c-14c7-0f46e47d0747-f25d558d {
   place-self: end;
+}
+
+#w-node-_3580d02d-2f25-3f5c-14c7-0f46e47d0749-f25d558d {
+  justify-self: start;
 }
 
 #w-node-d37b8475-6c3b-e40c-320f-458ad9c6b514-f25d558d {
@@ -1885,7 +1988,7 @@ body {
   place-self: center end;
 }
 
-#w-node-ece27fc3-c64c-fc6a-fe00-71bb7c7c6683-f25d558d {
+#w-node-ece27fc3-c64c-fc6a-fe00-71bb7c7c6683-f25d558d, #w-node-ece27fc3-c64c-fc6a-fe00-71bb7c7c6686-f25d558d, #email-form.w-node-ece27fc3-c64c-fc6a-fe00-71bb7c7c6687-f25d558d {
   align-self: center;
 }
 
@@ -2095,4 +2198,10 @@ body {
 
 #w-node-_4f2dd0ba-54a6-2f51-9704-94b1bcb533f2-d41b46ac {
   grid-area: span 1 / span 1 / span 1 / span 1;
+}
+
+@media screen and (max-width: 991px) {
+  #w-node-f72ff7e3-0883-fa6d-97c7-201d03a7f57a-f25d558d, #w-node-ece27fc3-c64c-fc6a-fe00-71bb7c7c6686-f25d558d {
+    align-self: center;
+  }
 }
