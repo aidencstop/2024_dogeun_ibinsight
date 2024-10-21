@@ -338,13 +338,16 @@ def get_recommendation(IGCSE_grades, input_dict):
     import random
     # Full list of offered IB Subjects
     subject_list = [
-        ["Maths AA SL", "Maths AA HL", "Maths AI SL", "Maths AI HL"], # ok
-        ["Physics SL", "Physics HL", "Chemistry SL", "Chemistry HL", "Biology SL", "Biology HL", "Computer Science SL", "Computer Science HL", "Environmental Systems and Societies SL"],
-        ["Economics SL", "Economics HL", "Geography SL", "Geography HL", "History SL", "History HL", "Psychology SL", "Psychology HL"],
+        ["Maths AA SL", "Maths AA HL", "Maths AI SL", "Maths AI HL"],  # ok
+        ["Physics SL", "Physics HL", "Chemistry SL", "Chemistry HL", "Biology SL", "Biology HL", "Computer Science SL",
+         "Computer Science HL", "Environmental Systems and Societies SL"],
+        ["Economics SL", "Economics HL", "Geography SL", "Geography HL", "History SL", "History HL", "Psychology SL",
+         "Psychology HL"],
         ["Korean A SL", "Korean A HL", "Spanish AB SL", "Spanish B SL", "Spanish B HL", "French AB SL",
          "French B SL", "French B HL", "Mandarin AB SL", "Chinese Language B SL", "Chinese Language B HL"],
-        ["English A SL", "English A HL"], # ok
-        ["Music SL", "Music HL", "Theatre SL", "Theatre HL", "(Visual Arts)Art SL", "(Visual Arts)Art HL", "Film SL", "Film HL"]
+        ["English A SL", "English A HL"],  # ok
+        ["Music SL", "Music HL", "Theatre SL", "Theatre HL", "(Visual Arts)Art SL", "(Visual Arts)Art HL", "Film SL",
+         "Film HL"]
     ]
     subject_pk_list = [
         [24, 25, 26, 27],
