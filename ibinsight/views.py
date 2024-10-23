@@ -87,6 +87,7 @@ def to_sign_up(request):
             messages.success(request, "User added successfully!")
 
             # default plot
+            import time
             # Libraries
             import matplotlib.pyplot as plt
             import pandas as pd
@@ -155,7 +156,7 @@ def to_sign_up(request):
             make_spider(row=row, title='group ', color=my_palette(0))
 
             plt.savefig(os.path.join(BASE_DIR, 'static') + "/plot/" + username + '.jpg', dpi=96, bbox_inches='tight')
-
+            time.sleep(2)
             return redirect('to-index')
 
         else:
@@ -596,6 +597,7 @@ def get_recommendation(IGCSE_grades, input_dict):
     return Final_subjects, final_subject_code_list
 
 def get_plot(username, code_list):
+    import time
     # Libraries
     import matplotlib.pyplot as plt
     import pandas as pd
@@ -735,6 +737,7 @@ def get_plot(username, code_list):
 
 
     plt.savefig(os.path.join(BASE_DIR, 'static')+"/plot/"+username+'.jpg', dpi=96, bbox_inches='tight')
+    time.sleep(2)
 
 def recommend(request):
     import random
