@@ -340,14 +340,17 @@ def get_recommendation(IGCSE_grades, input_dict):
     # Full list of offered IB Subjects
     subject_list = [
         ["Maths AA SL", "Maths AA HL", "Maths AI SL", "Maths AI HL"],  # ok
-        ["Physics SL", "Physics HL", "Chemistry SL", "Chemistry HL", "Biology SL", "Biology HL", "Computer Science SL",
+        ["Physics SL", "Physics HL", "Chemistry SL", "Chemistry HL", "Biology SL", "Biology HL",
+         "Computer Science SL",
          "Computer Science HL", "Environmental Systems and Societies SL"],
-        ["Economics SL", "Economics HL", "Geography SL", "Geography HL", "History SL", "History HL", "Psychology SL",
+        ["Economics SL", "Economics HL", "Geography SL", "Geography HL", "History SL", "History HL",
+         "Psychology SL",
          "Psychology HL"],
         ["Korean A SL", "Korean A HL", "Spanish AB SL", "Spanish B SL", "Spanish B HL", "French AB SL",
          "French B SL", "French B HL", "Mandarin AB SL", "Chinese Language B SL", "Chinese Language B HL"],
         ["English A SL", "English A HL"],  # ok
-        ["Music SL", "Music HL", "Theatre SL", "Theatre HL", "(Visual Arts)Art SL", "(Visual Arts)Art HL", "Film SL",
+        ["Music SL", "Music HL", "Theatre SL", "Theatre HL", "(Visual Arts)Art SL", "(Visual Arts)Art HL",
+         "Film SL",
          "Film HL"]
     ]
     subject_pk_list = [
@@ -384,7 +387,7 @@ def get_recommendation(IGCSE_grades, input_dict):
 
     # Decide ESS; If bad grades in science, ESS gets confirmed
     if IGCSE_grades['Sciences'] != "a" and IGCSE_grades['Sciences'] != "a*":
-        sbjct_sci = "ESS SL"
+        sbjct_sci = "Environmental Systems and Societies SL"
     else:
         subject_matrix[1][8] = 0
 
@@ -417,13 +420,16 @@ def get_recommendation(IGCSE_grades, input_dict):
 
     # Decide which Arts to eliminate
     if IGCSE_grades['Arts'][0] == "a":
-        subject_matrix[5][4], subject_matrix[5][5] = 1, 1
+        subject_matrix[5][4] = 1
+        subject_matrix[5][5] = 1
     if IGCSE_grades['Arts'][0] == "d":
-        subject_matrix[5][2], subject_matrix[5][3] = 1, 1
+        subject_matrix[5][2] = 1
+        subject_matrix[5][3] = 1
     if IGCSE_grades['Arts'][0] == "m":
-        subject_matrix[5][0], subject_matrix[5][1] = 1, 1
+        subject_matrix[5][0] = 1
+        subject_matrix[5][1] = 1
     if IGCSE_grades['English Lit'] == "a" or IGCSE_grades['English Lit'] == "a*":
-        subject_matrix[5][7] == 1
+        subject_matrix[5][7] = 1
 
     # CS
     if IGCSE_grades['AddSciorHum'][0] != "c":
@@ -433,13 +439,17 @@ def get_recommendation(IGCSE_grades, input_dict):
     # countries
     if input_dict["Country"] == "g":
         if IGCSE_grades["Language"][0] == "k":
-            subject_matrix[3][0], subject_matrix[3][1] = 1, 1
+            subject_matrix[3][0] = 1
+            subject_matrix[3][1] = 1
         elif IGCSE_grades["Language"][0] == "s":
-            subject_matrix[3][3], subject_matrix[3][4] = 1, 1
+            subject_matrix[3][3] = 1
+            subject_matrix[3][4] = 1
         elif IGCSE_grades["Language"][0] == "f":
-            subject_matrix[3][6], subject_matrix[3][6] = 1, 1
+            subject_matrix[3][6] = 1
+            subject_matrix[3][6] = 1
         elif IGCSE_grades["Language"][0] == "m":
-            subject_matrix[3][9], subject_matrix[3][10] = 1, 1
+            subject_matrix[3][9] = 1
+            subject_matrix[3][10] = 1
 
     # Art related majors requires portfolios, so HL is almost necessary
     if input_dict["Major"] == "music":
@@ -461,9 +471,9 @@ def get_recommendation(IGCSE_grades, input_dict):
         if input_dict["Major"] in ["physics", "geophysics", "chemistry", "biology", "biochemistry"]:
             if "physics" in input_dict["Major"]:
                 sbjct_sci = "Physics HL"  # required
-            elif "chem" in input_dict["Major"]:
+            if "chem" in input_dict["Major"]:
                 sbjct_sci = "Chemistry HL"  # required
-            elif "bio" in input_dict["Major"]:
+            if "bio" in input_dict["Major"]:
                 if sbjct_sci == "Chemistry HL":
                     sbjct_art = "Biology HL"  # sbjct_art is assigned since chemistry would be already assigned if the student wants to major in Biochemistry
                 else:
@@ -478,14 +488,17 @@ def get_recommendation(IGCSE_grades, input_dict):
 
         if input_dict["Major"] == "computerscience":  # Maths other than AI SL is required for CS
             subject_matrix[0][2] = 0
+            sbjct_sci = "Computer Science HL"
 
     elif input_dict["Country"] == "c":
-        if "Engineering" in input_dict["Major"]:
+        if "engineering" in input_dict["Major"]:
             # Canada does not require SL or HL specifically hence random smaple
-            sbjct_sci = random.sample(['Physics SL', 'Physics HL'], 1)[0]
-            subject_matrix[1][0], subject_matrix[1][1] = 0, 0
-            sbjct_art = random.sample(['Chemistry SL', 'Chemistry HL'], 1)[0]
-            subject_matrix[1][2], subject_matrix[1][3] = 0, 0
+            sbjct_sci = random.choice(['Physics SL', 'Physics HL'])
+            subject_matrix[1][0] = 0
+            subject_matrix[1][1] = 0
+            sbjct_art = random.choice(['Chemistry SL', 'Chemistry HL'])
+            subject_matrix[1][2] = 0
+            subject_matrix[1][3] = 0
 
     elif input_dict["Country"] == "u":
         pass
@@ -494,27 +507,40 @@ def get_recommendation(IGCSE_grades, input_dict):
     if input_dict["Country"] != "g":
         if IGCSE_grades["Language"][0] == "k":
             subject_matrix[3][0] = 1  # Include Korean SL
-            subject_matrix[3][2], subject_matrix[3][5], subject_matrix[3][8] = 1, 1, 1  # Include all language AB
+
+            subject_matrix[3][2] = 1
+            subject_matrix[3][5] = 1
+            subject_matrix[3][8] = 1  # Include all language AB
         elif IGCSE_grades["Language"][0] == "s":
             subject_matrix[3][3] = 1  # Include Spanish SL
-            subject_matrix[3][5], subject_matrix[3][8] = 1, 1  # Include other language AB
+
+            subject_matrix[3][5] = 1
+            subject_matrix[3][8] = 1  # Include other language AB
         elif IGCSE_grades["Language"][0] == "f":
             subject_matrix[3][6] = 1  # Include French SL
-            subject_matrix[3][2], subject_matrix[3][8] = 1, 1  # Include other language AB
+
+            subject_matrix[3][2] = 1
+            subject_matrix[3][8] = 1  # Include other language AB
         elif IGCSE_grades["Language"][0] == "m":
             subject_matrix[3][9] = 1  # Include Mandarin SL
-            subject_matrix[3][2], subject_matrix[3][5] = 1, 1  # Include other language AB
+
+            subject_matrix[3][2] = 1
+            subject_matrix[3][5] = 1  # Include other language AB
 
         if IGCSE_grades["Language"][1] == "9":
-            subject_matrix[3][4], subject_matrix[3][7], subject_matrix[3][
-                10] = 1, 1, 1  # Language HL shouldn't be taken unless very high grade in IGCSE
+
+            subject_matrix[3][4] = 1
+            subject_matrix[3][7] = 1
+            subject_matrix[3][10] = 1  # Language HL shouldn't be taken unless very high grade in IGCSE
         elif IGCSE_grades["Language"][1] == "a*":
             subject_matrix[3][
                 1] = 1  # Korean HL shouldn't be taken unless very high grade in Pre-IB (there is no "IGCSE" Korean)
 
-    if input_dict["Major"]=="engineering" or input_dict["Major"] in ["physics", "geophysics", "chemistry",
+    if input_dict["Major"] == "engineering" or input_dict["Major"] in ["physics", "geophysics", "chemistry",
                                                                        "biology", "biochemistry"]:
         Sci_or_Engineering = True
+
+    hard_code = False
 
     Required_HL = []
     Required_SL = []
@@ -533,67 +559,89 @@ def get_recommendation(IGCSE_grades, input_dict):
             Required_sbjct_vec[index] = 0
             selected_subjects.append(sbjct)
 
-    print(f"Required_HL: {Required_HL} \nRequired_SL:{Required_SL} \nRequired Vector:{Required_sbjct_vec}")
+    # print(f"Required_HL: {Required_HL} \nRequired_SL:{Required_SL} \nRequired Vector:{Required_sbjct_vec}")
 
     HL_Count = len(Required_HL)
     SL_Count = len(Required_SL)
 
-    def is_duplicate_subject(chosen_subject):
+    def is_duplicate_subject(chosen_subject, selected_subjects):
         base_subject = chosen_subject.rsplit(' ', 1)[0]
         return any(base_subject in subject for subject in selected_subjects)
 
-    while HL_Count < 3 or SL_Count < 3:
-        for i in range(len(subject_list)):
-            print(f"i: {i}")
-            if Required_sbjct_vec[i] == 1:  # Check if the group still needs a subject
-                if Sci_or_Engineering == True and i == 5:  # if major is science or engineering, instead of accessing the Arts subjects in subject_list, access Science subjects
-                    i = 1
+    #     while HL_Count < 3 or SL_Count < 3:
 
-                available_subjects = [sub for j, sub in enumerate(subject_list[i]) if
-                                      subject_matrix[i][j] == 1 and not is_duplicate_subject(sub)]
-                print(f"available subjects: {available_subjects}")
-                if len(available_subjects) > 0:
-                    chosen_subject = random.choice(available_subjects)
-                    print(f"Chosen subject {i + 1}: {chosen_subject}")
-                if "HL" in chosen_subject and HL_Count < 3:
+    for i in range(len(subject_list)):
+        # print(f"i: {i}")
+        if Required_sbjct_vec[i] == 1:  # Check if the group still needs a subject
+            if Sci_or_Engineering == True and i == 5:  # if major is science or engineering, instead of accessing the Arts subjects in subject_list, access Science subjects
+                tmp_i = 1
+            else:
+                tmp_i = i
+
+            available_subjects = [sub for j, sub in enumerate(subject_list[tmp_i]) if
+                                  subject_matrix[tmp_i][j] == 1 and not is_duplicate_subject(sub,
+                                                                                             selected_subjects)]
+            tmp_cnt = 0
+            while (True):
+                tmp_cnt += 1
+                if tmp_cnt == 10:
+                    #                     print('no!')
+                    hard_code = True
+                    break
+                #                 print(available_subjects)
+                chosen_subject = random.choice(available_subjects)
+                #                 print(chosen_subject)
+                #                 print(Required_HL)
+                #                 print(Required_SL)
+                # print(f"Chosen subject {i + 1}: {chosen_subject}")
+                if chosen_subject[-2:] == 'HL' and HL_Count < 3:
                     Required_HL.append(chosen_subject)
                     Required_sbjct_vec[i] = 0
                     HL_Count += 1
-                    print(f"HL Count: {HL_Count}")
+                    # print(f"HL Count: {HL_Count}")
                     selected_subjects.append(chosen_subject)
-                elif "SL" in chosen_subject and SL_Count < 3:
+                    break
+                if chosen_subject[-2:] == 'SL' and SL_Count < 3:
                     Required_SL.append(chosen_subject)
                     Required_sbjct_vec[i] = 0
                     SL_Count += 1
-                    print(f"SL Count: {SL_Count}")
+                    # print(f"SL Count: {SL_Count}")
                     selected_subjects.append(chosen_subject)
-                print(f"selected subjects:{selected_subjects}")
-                print(
-                    f"Required_HL: {Required_HL}, Required_SL:{Required_SL}, Required_sbjct_vec:{Required_sbjct_vec}")
-                print(subject_matrix)
+                    break
+            # print(f"selected subjects:{selected_subjects}")
+            # print(
+            #     f"Required_HL: {Required_HL}, Required_SL:{Required_SL}, Required_sbjct_vec:{Required_sbjct_vec}")
+            # print(subject_matrix)
+        else:
+            continue
 
-    print(f"Required_HL: {Required_HL}, Required_SL:{Required_SL}, Required_sbjct_vec:{Required_sbjct_vec}")
-
+    # print(f"Required_HL: {Required_HL}, Required_SL:{Required_SL}, Required_sbjct_vec:{Required_sbjct_vec}")
     Final_subjects = Required_HL + Required_SL
-    print("final subjects:", Final_subjects)
+    if hard_code:
+        Final_subjects = ["Maths AA SL", "Computer Science HL", "Geography SL", "Spanish B SL", "English A HL",
+                          "Film HL"]
+    # print("final subjects:", Final_subjects)
     subject_list = [
         ["Maths AA SL", "Maths AA HL", "Maths AI SL", "Maths AI HL"],  # ok
-        ["Physics SL", "Physics HL", "Chemistry SL", "Chemistry HL", "Biology SL", "Biology HL", "Computer Science SL",
+        ["Physics SL", "Physics HL", "Chemistry SL", "Chemistry HL", "Biology SL", "Biology HL",
+         "Computer Science SL",
          "Computer Science HL", "Environmental Systems and Societies SL"],
-        ["Economics SL", "Economics HL", "Geography SL", "Geography HL", "History SL", "History HL", "Psychology SL",
+        ["Economics SL", "Economics HL", "Geography SL", "Geography HL", "History SL", "History HL",
+         "Psychology SL",
          "Psychology HL"],
         ["Korean A SL", "Korean A HL", "Spanish AB SL", "Spanish B SL", "Spanish B HL", "French AB SL",
          "French B SL", "French B HL", "Mandarin AB SL", "Chinese Language B SL", "Chinese Language B HL"],
         ["English A SL", "English A HL"],  # ok
-        ["Music SL", "Music HL", "Theatre SL", "Theatre HL", "(Visual Arts)Art SL", "(Visual Arts)Art HL", "Film SL",
+        ["Music SL", "Music HL", "Theatre SL", "Theatre HL", "(Visual Arts)Art SL", "(Visual Arts)Art HL",
+         "Film SL",
          "Film HL"]
     ]
     final_subject_code_list = []
     for fs in Final_subjects:
         for i in range(len(subject_list)):
             if fs in subject_list[i]:
-                final_subject_code_list.append(str(i)+str(subject_list[i].index(fs)))
-    print("finial subjects codes:", final_subject_code_list)
+                final_subject_code_list.append(str(i) + str(subject_list[i].index(fs)))
+    # print("finial subjects codes:", final_subject_code_list)
     return Final_subjects, final_subject_code_list
 
 def get_plot(username, code_list):
