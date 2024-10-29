@@ -290,7 +290,7 @@ def to_about_ib_course_search(request, pk):
         entry_guidance_list.append(course.entry_guidance)
         course_aim_list.append(course.course_aims)
         course_pk_list.append(course.pk)
-        # print(course.name, course.pk)
+        print(course.name, course.pk)
 
     curr_user = request.user
 
@@ -335,22 +335,20 @@ def to_survey(request):
 
     return render(request, 'survey.html', {})
 
+
 def get_recommendation(IGCSE_grades, input_dict):
     import random
     # Full list of offered IB Subjects
     subject_list = [
         ["Maths AA SL", "Maths AA HL", "Maths AI SL", "Maths AI HL"],  # ok
-        ["Physics SL", "Physics HL", "Chemistry SL", "Chemistry HL", "Biology SL", "Biology HL",
-         "Computer Science SL",
+        ["Physics SL", "Physics HL", "Chemistry SL", "Chemistry HL", "Biology SL", "Biology HL", "Computer Science SL",
          "Computer Science HL", "Environmental Systems and Societies SL"],
-        ["Economics SL", "Economics HL", "Geography SL", "Geography HL", "History SL", "History HL",
-         "Psychology SL",
+        ["Economics SL", "Economics HL", "Geography SL", "Geography HL", "History SL", "History HL", "Psychology SL",
          "Psychology HL"],
         ["Korean A SL", "Korean A HL", "Spanish AB SL", "Spanish B SL", "Spanish B HL", "French AB SL",
          "French B SL", "French B HL", "Mandarin AB SL", "Chinese Language B SL", "Chinese Language B HL"],
         ["English A SL", "English A HL"],  # ok
-        ["Music SL", "Music HL", "Theatre SL", "Theatre HL", "(Visual Arts)Art SL", "(Visual Arts)Art HL",
-         "Film SL",
+        ["Music SL", "Music HL", "Theatre SL", "Theatre HL", "(Visual Arts)Art SL", "(Visual Arts)Art HL", "Film SL",
          "Film HL"]
     ]
     subject_pk_list = [
@@ -457,7 +455,7 @@ def get_recommendation(IGCSE_grades, input_dict):
     elif input_dict["Major"] == "performingarts" or input_dict["Major"] == "theatre":
         sbjct_art = "Theatre HL"
     elif input_dict["Major"] == "art":  # Art HL needed for Art major
-        sbjct_art = "Art HL"
+        sbjct_art = "(Visual Arts)Art HL"
     elif input_dict["Major"] == "film":
         sbjct_art = "Film HL"
 
@@ -579,8 +577,7 @@ def get_recommendation(IGCSE_grades, input_dict):
                 tmp_i = i
 
             available_subjects = [sub for j, sub in enumerate(subject_list[tmp_i]) if
-                                  subject_matrix[tmp_i][j] == 1 and not is_duplicate_subject(sub,
-                                                                                             selected_subjects)]
+                                  subject_matrix[tmp_i][j] == 1 and not is_duplicate_subject(sub, selected_subjects)]
             tmp_cnt = 0
             while (True):
                 tmp_cnt += 1
@@ -623,17 +620,14 @@ def get_recommendation(IGCSE_grades, input_dict):
     # print("final subjects:", Final_subjects)
     subject_list = [
         ["Maths AA SL", "Maths AA HL", "Maths AI SL", "Maths AI HL"],  # ok
-        ["Physics SL", "Physics HL", "Chemistry SL", "Chemistry HL", "Biology SL", "Biology HL",
-         "Computer Science SL",
+        ["Physics SL", "Physics HL", "Chemistry SL", "Chemistry HL", "Biology SL", "Biology HL", "Computer Science SL",
          "Computer Science HL", "Environmental Systems and Societies SL"],
-        ["Economics SL", "Economics HL", "Geography SL", "Geography HL", "History SL", "History HL",
-         "Psychology SL",
+        ["Economics SL", "Economics HL", "Geography SL", "Geography HL", "History SL", "History HL", "Psychology SL",
          "Psychology HL"],
         ["Korean A SL", "Korean A HL", "Spanish AB SL", "Spanish B SL", "Spanish B HL", "French AB SL",
          "French B SL", "French B HL", "Mandarin AB SL", "Chinese Language B SL", "Chinese Language B HL"],
         ["English A SL", "English A HL"],  # ok
-        ["Music SL", "Music HL", "Theatre SL", "Theatre HL", "(Visual Arts)Art SL", "(Visual Arts)Art HL",
-         "Film SL",
+        ["Music SL", "Music HL", "Theatre SL", "Theatre HL", "(Visual Arts)Art SL", "(Visual Arts)Art HL", "Film SL",
          "Film HL"]
     ]
     final_subject_code_list = []
